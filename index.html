@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090512">
+<title>Mine Bestuuu — Birthday Countdown</title>
+<style>
+:root{--pink:#ff48cf;--violet:#a855f7;--blue:#42c8ff;--ink:#080510;--white:#fff7ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#080510;color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;overflow-x:hidden}
+button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid white;outline-offset:4px}
+.scene{min-height:100svh;display:none;position:relative;isolation:isolate;overflow:hidden;padding:clamp(22px,5vw,64px) 18px;align-items:center;justify-content:center;text-align:center;background:radial-gradient(ellipse at 50% 15%,#32104c 0,#12091f 42%,#07040d 100%)}
+.scene.active{display:flex;animation:appear .8s ease both}@keyframes appear{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.scene:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.23;background-image:radial-gradient(#fff 1px,transparent 1.5px);background-size:38px 38px}
+.web{position:absolute;inset:0;pointer-events:none;opacity:.55;background:repeating-radial-gradient(circle at 0 0,transparent 0 34px,#d66aff33 35px 36px,transparent 37px 70px);mask-image:linear-gradient(135deg,#000,transparent 42%,transparent 60%,#000)}
+.wrap{width:min(980px,100%);margin:auto;position:relative;z-index:1}
+.eyebrow{letter-spacing:.25em;text-transform:uppercase;color:#e9a8ff;font-size:.72rem;font-weight:800}
+h1,h2,p{margin-top:0}h1{font-size:clamp(2.7rem,9vw,6.6rem);line-height:.95;letter-spacing:-.055em;margin:16px 0;background:linear-gradient(110deg,#fff,#ff9be8 40%,#9c78ff 75%,#78e4ff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 35px #c72aff30}
+h2{font-size:clamp(2rem,6vw,4.2rem);line-height:1.05;margin-bottom:14px}
+.lead{color:#e8d7f2;line-height:1.7;font-size:clamp(1rem,2.5vw,1.2rem);max-width:680px;margin:0 auto 26px}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:9px 15px;border:1px solid #ffffff2b;border-radius:999px;background:#ffffff0b;color:#f5dfff;font-size:.82rem}
+.btn{border:0;border-radius:999px;padding:14px 22px;font-weight:850;color:#16051f;background:linear-gradient(100deg,#ff8be6,#c58cff 55%,#8de6ff);box-shadow:0 8px 30px #d52fff38;transition:.2s transform,.2s filter}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}.btn.secondary{background:#ffffff12;color:white;border:1px solid #ffffff35;box-shadow:none}.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.countgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:650px;margin:30px auto}
+.count{padding:clamp(12px,3vw,22px) 8px;border:1px solid #d987ff55;border-radius:18px;background:linear-gradient(145deg,#ffffff14,#ffffff05);box-shadow:inset 0 0 25px #d52fff12}
+.count strong{display:block;font-size:clamp(1.8rem,6vw,3.4rem);font-variant-numeric:tabular-nums}.count span{font-size:.72rem;color:#d8b8e9;letter-spacing:.14em;text-transform:uppercase}
+.brandimg{width:min(240px,55vw);height:auto;display:block;margin:0 auto 20px;border-radius:16px;box-shadow:0 0 50px #c333ff33}
+.hint{color:#cdb6d9;font-size:.88rem;margin-top:14px}
+.progress{position:fixed;z-index:20;top:0;left:0;right:0;height:3px;background:#ffffff16}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--blue));transition:width .5s}
+.topnote{position:fixed;z-index:21;top:12px;right:14px;font-size:.72rem;color:#d9c2e8;background:#10091bbd;border:1px solid #ffffff20;border-radius:99px;padding:7px 10px;backdrop-filter:blur(8px)}
+.balloon-field{display:flex;justify-content:center;align-items:flex-end;gap:clamp(6px,2vw,20px);flex-wrap:wrap;min-height:250px;margin:24px auto}
+.balloon{width:clamp(52px,10vw,88px);height:clamp(70px,13vw,116px);border:0;border-radius:52% 52% 48% 48%;position:relative;box-shadow:inset -9px -10px 16px #0003,inset 8px 7px 12px #fff5,0 10px 20px #0005;animation:float 2.8s ease-in-out infinite alternate}
+.balloon:after{content:"";position:absolute;bottom:-9px;left:47%;border-left:5px solid transparent;border-right:5px solid transparent;border-top:10px solid currentColor}
+.balloon:before{content:"";position:absolute;top:100%;left:50%;height:48px;border-left:1px solid #ffffff8a}
+@keyframes float{to{transform:translateY(-17px) rotate(4deg)}}.balloon.pop{animation:pop .24s forwards}@keyframes pop{to{transform:scale(1.7);opacity:0}}
+.cake{font-size:clamp(6rem,20vw,12rem);filter:drop-shadow(0 0 30px #ff69da66);margin:12px 0;user-select:none;touch-action:pan-y;transition:.6s}
+.cake.cut{transform:rotate(-8deg) scale(.9);filter:drop-shadow(0 0 35px #ff9bdc)}
+.cakewrap{display:inline-block;position:relative}.slice{display:none;position:absolute;right:-8px;top:25%;font-size:clamp(3rem,10vw,6rem);transform:rotate(25deg)}.cake.cut+.slice{display:block;animation:appear .8s}
+.candle{font-size:clamp(5rem,17vw,9rem);filter:drop-shadow(0 0 24px #ffb84d66);margin:14px}
+.flame{display:inline-block;animation:flicker .55s infinite alternate;transform-origin:50% 85%}@keyframes flicker{to{transform:rotate(8deg) scale(.88);filter:brightness(1.5)}}
+.flame.off{opacity:0;transform:scale(.1)}
+.letter{max-width:780px;margin:24px auto;padding:clamp(22px,5vw,46px);border:1px solid #eaa3ff55;border-radius:24px;background:linear-gradient(145deg,#21102fdd,#0d0a18ee);box-shadow:0 20px 80px #0008;text-align:left;line-height:1.85;color:#f5eafa;font-size:clamp(.97rem,2vw,1.1rem)}
+.letter .sign{font-size:1.2rem;color:#ff8de4;font-weight:900;text-align:right;margin:20px 0 0}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:26px auto;text-align:left}
+.photo{margin:0;border:1px solid #ffffff24;background:#ffffff0a;padding:8px;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px #0005}
+.photo img{display:block;width:100%;height:clamp(170px,34vw,340px);object-fit:cover;border-radius:12px}.photo figcaption{padding:10px 4px 3px;color:#e8c7f4;font-size:.85rem}
+.poster{width:min(560px,100%);border-radius:18px;border:1px solid #ffffff30;box-shadow:0 15px 55px #0008;margin:20px auto}
+.wishes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:780px;margin:28px auto}
+.wish{padding:20px 16px;border:1px solid #e18bff45;border-radius:18px;background:linear-gradient(145deg,#ffffff13,#ffffff06);color:#f8e9ff;line-height:1.5;animation:appear .7s both}
+.gift{font-size:clamp(8rem,25vw,14rem);line-height:1.2;filter:drop-shadow(0 0 35px #ff4fcf66);animation:float 2.5s ease-in-out infinite alternate;cursor:pointer}
+.revealpic{width:min(360px,78vw);max-height:58vh;object-fit:cover;border-radius:24px;border:2px solid #ff8ce9;box-shadow:0 0 60px #df35ff66;margin:18px auto}
+.finaltext{font-size:clamp(1.8rem,6vw,3.5rem);font-weight:1000;line-height:1.1;color:#ffb4ec;text-shadow:0 0 25px #e832ff88}
+footer{color:#a990b5;font-size:.75rem;margin-top:28px}
+@media(max-width:560px){.gallery,.wishes{grid-template-columns:1fr}.photo img{height:auto;max-height:480px;object-fit:contain;background:#080510}.countgrid{gap:6px}.count{border-radius:13px}.topnote{top:8px;right:8px}.scene{padding-top:55px;padding-bottom:36px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="progress"><span id="progress"></span></div><div class="topnote" id="stepnote">A little surprise for you ✦</div>
+<section class="scene active" id="countdown">
+ <div class="web"></div><div class="wrap">
+  <div class="eyebrow">A little universe made just for you</div>
+  <h1>Mine Bestuuu<br>Birthday Countdown</h1>
+  <p class="lead">Something special is waiting for you, Farebi. The countdown ends when your birthday begins. 💜</p>
+  <img class="brandimg" src="assets/spidey-farebi-logo.jpg" alt="Spidey and Farebi">
+  <div class="pill">🕷️ 18 December 2026 · India Standard Time</div>
+  <div class="countgrid">
+   <div class="count"><strong id="days">00</strong><span>Days</span></div><div class="count"><strong id="hours">00</strong><span>Hours</span></div><div class="count"><strong id="minutes">00</strong><span>Minutes</span></div><div class="count"><strong id="seconds">00</strong><span>Seconds</span></div>
+  </div>
+  <p class="hint" id="countHint">Your surprise unlocks at 12:00 AM IST 💫</p>
+  <div class="actions"><button class="btn secondary" id="preview">Preview surprise (for testing)</button></div>
+ </div>
+</section>
+
+<section class="scene" id="balloons"><div class="web"></div><div class="wrap">
+ <div class="eyebrow">First, a little celebration</div><h2>Pop the balloons! 🎈</h2><p class="lead">Tap each balloon and watch it pop. Clear the sky to reveal your next surprise.</p>
+ <div class="balloon-field" id="balloonField"></div><p class="hint" id="balloonHint">Balloons left: 12</p>
+ <div class="actions"><button class="btn" id="balloonNext" disabled>Continue ✨</button></div>
+</div></section>
+
+<section class="scene" id="cake"><div class="web"></div><div class="wrap">
+ <div class="eyebrow">Made with extra chocolate</div><h2>A cake for my Farebi 🍫</h2><p class="lead">This cake has your name written on it. Swipe across the cake to cut it, or tap the button.</p>
+ <div class="cakewrap"><div class="cake" id="cakeEmoji" aria-label="Chocolate cake">🎂</div><span class="slice">🍰</span></div>
+ <div class="pill">Written on the cake: <b>FAREBI</b></div>
+ <div class="actions"><button class="btn" id="cutCake">Swipe / Cut the cake 🔪</button></div>
+</div></section>
+
+<section class="scene" id="candle"><div class="web"></div><div class="wrap">
+ <div class="eyebrow">One wish, just for you</div><h2>Make a wish ✨</h2><p class="lead">Take a deep breath and blow out your candle. You can use the microphone or simply tap the flame.</p>
+ <div class="candle">🕯️ <span class="flame" id="flame">🔥</span></div>
+ <div class="actions"><button class="btn" id="blow">Blow the candle 🌬️</button><button class="btn secondary" id="mic">Use microphone</button></div>
+ <p class="hint" id="micHint">Microphone is optional. The button works without permission.</p>
+</div></section>
+
+<section class="scene" id="letter"><div class="web"></div><div class="wrap">
+ <div class="eyebrow">From Makda, with all my heart</div><h2>Happy Birthday, Bestuuu 💗</h2>
+ <article class="letter">
+ To the most special person in my whole life happy birthday to you may all the years ahead of your life bring you so much joy and success may all your sorrows go away may you always keep shining the way you are I admire you the most and for me nothing is more important than your smile and peace may you find all the happiness in this world may you stay blessed and safe may you find the peace that you’re always looking for I have a lot of things to say to you but words will never let you know what I feel for you So I’ll just say I only wanna see you on the top In my life you’re not just a best friend to me you’re more than I could ever say
+ <div class="sign">I LOVE YOU BESTUUUU FAREBI ❤️<br>— Makda</div>
+ </article>
+ <div class="actions"><button class="btn" data-next="memories">See our beautiful memories 💞</button></div>
+</div></section>
+
+<section class="scene" id="memories"><div class="web"></div><div class="wrap">
+ <div class="eyebrow">Little moments, forever memories</div><h2>Our Beautiful Memories Together 💜</h2>
+ <p class="lead">Every picture holds a little piece of our story. Keep smiling, Bestuuu.</p>
+ <div class="gallery">
+  <figure class="photo"><img src="assets/memory-couple-sitting.jpg" alt="A special moment together"><figcaption>Our kind of forever ✨</figcaption></figure>
+  <figure class="photo"><img src="assets/memory-couple-walking.jpg" alt="A happy walk together"><figcaption>Side by side, always 💗</figcaption></figure>
+  <figure class="photo"><img src="assets/birthday-collage.jpg" alt="Birthday memories collage"><figcaption>Made of little moments 🕷️</figcaption></figure>
+  <figure class="photo"><img src="assets/spidey-city.jpg" alt="Spidey and Farebi city artwork"><figcaption>Dosti beyond borders 🌃</figcaption></figure>
+ </div>
+ <img class="poster" src="assets/friendship-poster.jpg" alt="Friendship powered by insults and bad decisions">
+ <img class="poster" src="assets/duo-poster.jpg" alt="Spidey and Farebi friendship poster">
+ <img class="poster" src="assets/comic-panel.jpg" alt="Spidey and Farebi comic panel">
+ <div class="actions"><button class="btn" data-next="wishes">A few more wishes for you 💌</button></div>
+</div></section>
+
+<section class="scene" id="wishes"><div class="web"></div><div class="wrap">
+ <div class="eyebrow">A few things I wish for you</div><h2>Only the best for you 💖</h2>
+ <div class="wishes">
+  <div class="wish">🌷 May your days be full of happiness.</div>
+  <div class="wish">✨ May every dream bring you closer to success.</div>
+  <div class="wish">🫶 May you always feel loved, valued and understood.</div>
+  <div class="wish">🌙 May your heart find the peace it deserves.</div>
+  <div class="wish">💫 Keep shining and never stop being you.</div>
+  <div class="wish">❤️ And please, never forget how special you are to me.</div>
+ </div>
+ <div class="actions"><button class="btn" data-next="gift">One last surprise 🎁</button></div>
+</div></section>
+
+<section class="scene" id="gift"><div class="web"></div><div class="wrap">
+ <div class="eyebrow">Your final surprise</div><h2>Something is waiting for you…</h2><p class="lead">Tap the gift. But don't blame me for what comes out. 😂</p>
+ <button class="gift" id="openGift" aria-label="Open your gift">🎁</button><p class="hint">Tap to unwrap your surprise</p>
+</div></section>
+
+<section class="scene" id="final"><div class="web"></div><div class="wrap">
+ <div class="eyebrow">The greatest gift of all (apparently) 😂</div>
+ <h2>Surprise, Bestuuu!</h2>
+ <img class="revealpic" src="assets/makda.jpg" alt="Makda">
+ <div class="finaltext">Mubarak ho apko<br>Makda mila hai 😂😂</div>
+ <p class="lead" style="margin-top:22px">Happy Birthday once again, Farebi. I LOVE YOU BESTUUUU ❤️</p>
+ <div class="actions"><button class="btn secondary" onclick="location.reload()">Replay the surprise ↻</button></div>
+ <footer>Made with love, chaos & a little bit of Makda 🕷️</footer>
+</div></section>
+
+<script>
+const target = new Date('2026-12-18T00:00:00+05:30').getTime(); // India Standard Time
+const ids=['countdown','balloons','cake','candle','letter','memories','wishes','gift','final'];
+let current=0;
+function show(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');current=ids.indexOf(id);document.getElementById('progress').style.width=((current)/(ids.length-1)*100)+'%';document.getElementById('stepnote').textContent=current===0?'A little surprise for you ✦':`Surprise ${current} of ${ids.length-1} ✦`;window.scrollTo({top:0,behavior:'smooth'});}
+function updateCountdown(){let diff=target-Date.now();if(diff<=0){['days','hours','minutes','seconds'].forEach(x=>document.getElementById(x).textContent='00');document.getElementById('countHint').textContent='It is your birthday! Your surprise is ready 💜';show('balloons');return;}
+let d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);
+document.getElementById('days').textContent=String(d).padStart(2,'0');document.getElementById('hours').textContent=String(h).padStart(2,'0');document.getElementById('minutes').textContent=String(m).padStart(2,'0');document.getElementById('seconds').textContent=String(s).padStart(2,'0');}
+setInterval(updateCountdown,1000);updateCountdown();
+document.getElementById('preview').onclick=()=>show('balloons');
+document.querySelectorAll('[data-next]').forEach(b=>b.onclick=()=>show(b.dataset.next));
+const colors=['#ff4fb8','#9e66ff','#48cfff','#ff8b52','#ff5f75','#b5ed62','#f3c35f','#e58aff','#56e0c2','#ff77d1','#7d8cff','#ffad68'];
+const field=document.getElementById('balloonField');let popped=0;
+colors.forEach((c,i)=>{let b=document.createElement('button');b.className='balloon';b.style.background=c;b.style.color=c;b.style.animationDelay=(i*.12)+'s';b.setAttribute('aria-label','Pop balloon');b.onclick=()=>{if(b.classList.contains('pop'))return;b.classList.add('pop');b.disabled=true;popped++;document.getElementById('balloonHint').textContent='Balloons left: '+(colors.length-popped);if(popped===colors.length)document.getElementById('balloonNext').disabled=false;};field.appendChild(b);});
+document.getElementById('balloonNext').onclick=()=>show('cake');
+function cut(){let c=document.getElementById('cakeEmoji');if(c.classList.contains('cut'))return;c.classList.add('cut');document.getElementById('cutCake').textContent='Cake cut! Continue ✨';document.getElementById('cutCake').onclick=()=>show('candle');}
+document.getElementById('cutCake').onclick=cut;
+let startX=0;document.getElementById('cakeEmoji').addEventListener('touchstart',e=>startX=e.touches[0].clientX,{passive:true});document.getElementById('cakeEmoji').addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientX-startX)>35)cut();},{passive:true});
+function extinguish(){document.getElementById('flame').classList.add('off');document.getElementById('micHint').textContent='Wish made? Then it is time for your birthday message 💗';document.querySelector('#candle .actions').innerHTML='<button class="btn" id="afterCandle">Make your wish ✨</button>';document.getElementById('afterCandle').onclick=()=>show('letter');}
+document.getElementById('blow').onclick=extinguish;document.getElementById('flame').onclick=extinguish;
+document.getElementById('mic').onclick=async()=>{if(!navigator.mediaDevices?.getUserMedia){document.getElementById('micHint').textContent='Microphone not available here — tap the flame instead.';return;}try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});const ctx=new (window.AudioContext||window.webkitAudioContext)();const source=ctx.createMediaStreamSource(stream);const analyser=ctx.createAnalyser();analyser.fftSize=256;source.connect(analyser);const data=new Uint8Array(analyser.frequencyBinCount);document.getElementById('micHint').textContent='Blow gently towards your microphone…';let checks=0;const listen=()=>{analyser.getByteTimeDomainData(data);let sum=0;for(let v of data)sum+=(v-128)*(v-128);let rms=Math.sqrt(sum/data.length);if(rms>18){stream.getTracks().forEach(t=>t.stop());ctx.close();extinguish();return;}if(++checks<180)setTimeout(listen,100);else{stream.getTracks().forEach(t=>t.stop());ctx.close();document.getElementById('micHint').textContent='No blow detected — tap the flame or use the button.';}};listen();}catch(e){document.getElementById('micHint').textContent='Mic permission not given. Tap the flame or use the button.';}};
+document.getElementById('openGift').onclick=()=>show('final');
+</script>
+</body></html>
